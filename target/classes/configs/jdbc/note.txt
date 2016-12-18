@@ -1,0 +1,5 @@
+遇到一个BUG：
+	配置文件里直接写driver,url,username,password话，读取属性会出错，导致无法连接到数据库。
+	目前猜测是driver,url,username,password的哪个属性名和c3p0源码或者context:property-placeholder类源码冲突。
+	因此，或者可以将这几个属性名换成别的名称，试过换成a,b,c,d也是可以的，不过为了规范命名，这里写成
+	c3p0.driver,c3p0.url,c3p0.username,c3p0.password

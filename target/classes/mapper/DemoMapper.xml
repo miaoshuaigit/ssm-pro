@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.westear.ssm.dao.DemoMapper" >
+  <resultMap id="BaseResultMap" type="com.westear.ssm.model.Demo" >
+    <result column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="TEAMNAME_EN" property="teamnameEn" jdbcType="VARCHAR" />
+    <result column="TEAMNAME_ZH" property="teamnameZh" jdbcType="VARCHAR" />
+    <result column="TEAMRANK" property="teamrank" jdbcType="DECIMAL" />
+    <result column="TEAMCREATEDATE" property="teamcreatedate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, TEAMNAME_EN, TEAMNAME_ZH, TEAMRANK, TEAMCREATEDATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.westear.ssm.model.DemoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from DEMO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.westear.ssm.model.DemoExample" >
+    delete from DEMO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.westear.ssm.model.Demo" >
+  	<selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+  		select sys_guid() from dual
+  	</selectKey>
+    insert into DEMO (ID, TEAMNAME_EN, TEAMNAME_ZH, 
+      TEAMRANK, TEAMCREATEDATE)
+    values (#{id,jdbcType=VARCHAR}, #{teamnameEn,jdbcType=VARCHAR}, #{teamnameZh,jdbcType=VARCHAR}, 
+      #{teamrank,jdbcType=DECIMAL}, #{teamcreatedate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.westear.ssm.model.Demo" >
+  	<selectKey keyProperty="id" resultType="java.lang.String" order="BEFORE">
+  		select sys_guid() from dual
+  	</selectKey>
+    insert into DEMO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="teamnameEn != null" >
+        TEAMNAME_EN,
+      </if>
+      <if test="teamnameZh != null" >
+        TEAMNAME_ZH,
+      </if>
+      <if test="teamrank != null" >
+        TEAMRANK,
+      </if>
+      <if test="teamcreatedate != null" >
+        TEAMCREATEDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="teamnameEn != null" >
+        #{teamnameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="teamnameZh != null" >
+        #{teamnameZh,jdbcType=VARCHAR},
+      </if>
+      <if test="teamrank != null" >
+        #{teamrank,jdbcType=DECIMAL},
+      </if>
+      <if test="teamcreatedate != null" >
+        #{teamcreatedate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.westear.ssm.model.DemoExample" resultType="java.lang.Integer" >
+    select count(*) from DEMO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update DEMO
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamnameEn != null" >
+        TEAMNAME_EN = #{record.teamnameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamnameZh != null" >
+        TEAMNAME_ZH = #{record.teamnameZh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teamrank != null" >
+        TEAMRANK = #{record.teamrank,jdbcType=DECIMAL},
+      </if>
+      <if test="record.teamcreatedate != null" >
+        TEAMCREATEDATE = #{record.teamcreatedate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update DEMO
+    set ID = #{record.id,jdbcType=VARCHAR},
+      TEAMNAME_EN = #{record.teamnameEn,jdbcType=VARCHAR},
+      TEAMNAME_ZH = #{record.teamnameZh,jdbcType=VARCHAR},
+      TEAMRANK = #{record.teamrank,jdbcType=DECIMAL},
+      TEAMCREATEDATE = #{record.teamcreatedate,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

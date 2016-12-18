@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	  http://www.springframework.org/schema/beans/spring-beans.xsd
+	  http://www.springframework.org/schema/context 
+	  http://www.springframework.org/schema/context/spring-context.xsd
+	  http://www.springframework.org/schema/mvc 
+	  http://www.springframework.org/schema/mvc/spring-mvc.xsd" >
+	
+	<!-- 激活注解方式，如果不激活注解方式扫描，则不可以使用<context:exclude-filter -->
+	<context:annotation-config />
+	<!-- 除了Controller注释的类全扫描 -->
+	<context:component-scan base-package="com.westear.ssm">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	</context:component-scan>
+	
+</beans>
