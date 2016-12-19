@@ -1,8 +1,12 @@
 package com.westear.ssm.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.westear.ssm.model.Book;
@@ -23,5 +27,12 @@ public class BookController {
 		book.setNum(bookNum);
 		bookService.addBook(book);
 		return "demo";
+	}
+	
+	@RequestMapping(value="/list", method=RequestMethod.GET)
+	public String bookList(Model model){
+		List<Book> bookList = bookService.queryBookList();
+		model.addAttribute("list", bookList);
+		return "demo/bookList";
 	}
 }

@@ -1,6 +1,7 @@
 package com.westear.ssm.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import com.westear.ssm.enums.AppointStateEnum;
 import com.westear.ssm.model.Appointment;
 import com.westear.ssm.model.AppointmentKey;
 import com.westear.ssm.model.Book;
+import com.westear.ssm.model.BookExample;
 import com.westear.ssm.service.IBookService;
 
 @Service
@@ -65,4 +67,10 @@ public class BookServiceImpl implements IBookService {
             return new AppointExecution(bookId, AppointStateEnum.INNER_ERROR);
         }
     }
+
+	@Override
+	public List<Book> queryBookList() {
+		BookExample example = new BookExample();
+		return this.bookMapper.selectByExample(example);
+	}
 }
