@@ -3,6 +3,7 @@ package com.westear.ssm.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.internal.runners.model.EachTestNotifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.westear.ssm.model.Appointment;
 import com.westear.ssm.model.AppointmentKey;
 import com.westear.ssm.model.Book;
 import com.westear.ssm.model.BookExample;
+import com.westear.ssm.model.BookExample.Criteria;
 import com.westear.ssm.service.IBookService;
 
 @Service
@@ -71,6 +73,14 @@ public class BookServiceImpl implements IBookService {
 	@Override
 	public List<Book> queryBookList() {
 		BookExample example = new BookExample();
+		return this.bookMapper.selectByExample(example);
+	}
+
+	@Override
+	public List<Book> queryBookByName(String name) {
+		BookExample example = new BookExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andNameLike(name);
 		return this.bookMapper.selectByExample(example);
 	}
 }

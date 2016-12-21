@@ -3,8 +3,28 @@
 <%@ include file="/common/jsp/common.jsp"%>
 <title>DEMO</title>
 <link href="${path}/resources/demo/dashboard.css" rel="stylesheet">
+<script type="text/javascript">
+	function appoint(bookId){
+		$.ajax({
+			url:'${path}/book/appoint',
+			type:'POST',
+			data:{
+				bookId:bookId,
+				studentId:'0538'
+			},
+			dataType:'text',
+			success:function(result){
+				alert(result);
+				window.location.href = "${path}/book/list";
+			}
+		});
+	}
+	
+	function queryBookByName(){
+		$("#searchForm").submit();
+	}
+</script>
 </head>
-
 <body>
 
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -17,18 +37,17 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand"
-					href="#">Project name</a>
+				<a class="navbar-brand" href="#">Project name</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">Dashboard</a></li>
+					<li><a href="javascript:void(0);" onclick="queryBookByName();">Query</a></li>
 					<li><a href="#">Settings</a></li>
 					<li><a href="#">Profile</a></li>
 					<li><a href="#">Help</a></li>
 				</ul>
-				<form class="navbar-form navbar-right">
-					<input type="text" class="form-control" placeholder="Search...">
+				<form class="navbar-form navbar-right" id="searchForm" action="${path}/book/queryBookByName">
+					<input type="text" name="name" class="form-control" placeholder="Search...">
 				</form>
 			</div>
 		</div>
@@ -55,7 +74,7 @@
 								<td>${b.bookId }</td>
 								<td>${b.name}</td>
 								<td>${b.num }</td>
-								<td></td>
+								<td><a href="javascript:void(0);" onclick="appoint('${b.bookId}')">appiont</a></td>
 							</c:forEach>
 						</tbody>
 					</table>

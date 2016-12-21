@@ -12,4 +12,6 @@ public interface IBookService {
 	public AppointExecution appoint(String bookId, String studentId);
 	
 	public List<Book> queryBookList();
+	
+	public List<Book> queryBookByName(String name);
 }
