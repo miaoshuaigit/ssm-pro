@@ -1,4 +1,4 @@
-package com.westear.ssm.util;
+package com.westear.ssm.util.pageUtil;
 
 import java.util.ArrayList;
 import java.util.List;
