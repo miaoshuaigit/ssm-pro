@@ -62,3 +62,31 @@ drop procedure insert_role;
 begin 
   insert_role();
 end;
+
+--往T_USER_ROLE表中插入存在的roleid，5个一组
+create or replace procedure update_user_role_id 
+as  
+i int;
+n int;
+begin 
+  i := 0;
+  while(i <= 5)
+  loop
+    n := 0;
+    i := i+1;
+    while(n < 6)
+    loop
+       update t_user_role 
+       set role_id = (select id from 
+           (select A.*,rownum rn from 
+                   (select * from t_role) A) where rn = i
+            )
+       where id = (select id from 
+           (select B.*,rownum rn from 
+                   (select * from t_user_role) B) where rn = i+5*n
+            );
+       n := n+1;
+    end loop;
+  end loop;
+  commit;
+end;
