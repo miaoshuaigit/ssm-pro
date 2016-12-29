@@ -229,6 +229,7 @@
 	    <version>20160212</version>
 	</dependency>
   </dependencies>
+  
   <build>
   	<plugins>
  		<!-- 使用maven插件，使得编译时使用jdk1.8 -->

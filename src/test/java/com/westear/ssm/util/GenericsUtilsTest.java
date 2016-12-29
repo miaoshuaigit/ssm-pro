@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.westear.ssm.model.Book;
-import com.westear.ssm.util.GenericsUtils;
+import com.westear.ssm.util.cache.GenericsUtils;
 
 public class GenericsUtilsTest extends BaseTest<Book> {
 	

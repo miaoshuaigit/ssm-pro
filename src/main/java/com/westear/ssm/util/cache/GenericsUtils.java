@@ -1,4 +1,4 @@
-package com.westear.ssm.util;
+package com.westear.ssm.util.cache;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
