@@ -16,6 +16,7 @@
        <!-- log4j日志文件管理包版本 -->  
        <slf4j.version>1.7.7</slf4j.version>  
        <log4j.version>1.2.17</log4j.version>   
+       <activiti.version>5.16</activiti.version>
   </properties>
   
   <dependencies>
@@ -198,6 +199,18 @@
         <version>1.9</version>  
     </dependency>  
 	
+	<!-- activiti架包 -->
+	<dependency>
+	    <groupId>org.activiti</groupId>
+	    <artifactId>activiti-engine</artifactId>
+	    <version>${activiti.version}</version>
+	</dependency>
+	<dependency>  
+	    <groupId>org.activiti</groupId>  
+	    <artifactId>activiti-spring</artifactId>  
+	    <version>${activiti.version}</version>  
+	</dependency>  
+	
 	<!-- redis客户端:Jedis -->
 	<dependency>
 		<groupId>redis.clients</groupId>
@@ -221,7 +234,15 @@
 		<artifactId>commons-collections</artifactId>
 		<version>3.2</version>
 	</dependency>
+	
+	<!-- JSON工具类 -->
+	<dependency>
+	    <groupId>org.json</groupId>
+	    <artifactId>json</artifactId>
+	    <version>20160212</version>
+	</dependency>
   </dependencies>
+  
   <build>
   	<plugins>
  		<!-- 使用maven插件，使得编译时使用jdk1.8 -->
