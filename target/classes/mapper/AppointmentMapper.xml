@@ -199,4 +199,41 @@
     where BOOK_ID = #{bookId,jdbcType=VARCHAR}
       and STUDENT_ID = #{studentId,jdbcType=VARCHAR}
   </update>
+  
+  <!-- 分页查询 -->
+  <select id="selectAppointmentByPage" resultMap="BaseResultMap" parameterType="com.westear.ssm.model.AppointmentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from APPOINTMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <!-- book and appoint connect query -->
+  <resultMap id="bookAppointResult" type="com.westear.ssm.vo.BookAppointVO" >
+  	<id column="BOOK_ID" property="bookId" jdbcType="VARCHAR" />
+    <id column="STUDENT_ID" property="appointmentKey.studentId" jdbcType="VARCHAR" />
+    <id column="APPOINTMENT_BOOK_ID" property="appointmentKey.bookId" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="NUM" property="num" jdbcType="DECIMAL" />
+    <result column="APPOINT_TIME" property="appointment.appointTime" jdbcType="TIMESTAMP" />
+    <result column="APPOINTMENT_ID" property="appointment.appointmentId" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectBookAndAppointment" resultMap="bookAppointResult">
+  	select distinct 
+  	b.BOOK_ID, b.NAME, b.NUM, 
+  	c.STUDENT_ID, c.BOOK_ID as APPOINTMENT_BOOK_ID,
+  	c.APPOINTMENT_ID, c.APPOINT_TIME
+  	from 
+  	BOOK b right join APPOINTMENT c 
+  	on b.BOOK_ID = c.BOOK_ID 
+  	order by 
+  	c.APPOINT_TIME desc 
+  </select>
 </mapper>

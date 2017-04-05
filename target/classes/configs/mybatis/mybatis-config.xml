@@ -4,6 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 	
 <configuration>
+	<!-- 自定义数据库方言配置 -->
+	<properties>
+        <property name="dialectClass" value="com.westear.ssm.util.pageUtil.MyOracleDialect"/>
+    </properties>
+    
 	<!-- 配置全局属性 -->
 	<settings>
 		<!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 -->
@@ -30,4 +35,9 @@
 		<!-- 设置关联对象加载的形态，此处为按需加载字段(加载字段由SQL指 定)，不会加载关联表的所有字段，以提高性能 -->
         <setting name="aggressiveLazyLoading" value="false"/>
 	</settings>
+	
+	<plugins>
+        <plugin interceptor="com.westear.ssm.util.pageUtil.PageStatementHandlerInterceptor"/>
+        <plugin interceptor="com.westear.ssm.util.pageUtil.ResultSetHandlerInterceptor"/>
+    </plugins>
 </configuration>
