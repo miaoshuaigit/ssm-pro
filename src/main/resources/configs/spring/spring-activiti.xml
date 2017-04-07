@@ -10,16 +10,22 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
        
+       <!-- spring和activiti集成的配置文件 -->
+       
+       <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+    	   <property name="dataSource" ref="dataSource" />  
+  	   </bean>  
+       
        <!-- 配置流程引擎配置信息对象 -->
        <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration" 
        			p:dataSource-ref="dataSource" 
        			p:transactionManager-ref="transactionManager"
 				p:databaseSchemaUpdate="true"
 				p:jobExecutorActivate="false"
-				p:databaseType="oracle"
 		  		p:activityFontName="宋体"
 		  		p:labelFontName="黑体"
-		  		p:xmlEncoding="utf-8" />
+		  		p:xmlEncoding="utf-8"
+		  		p:databaseSchema="ACTIVITI" />
 		  		
 		<!-- 配置流程引擎 -->	
 	  	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean"

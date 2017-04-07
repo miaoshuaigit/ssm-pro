@@ -1,9 +1,12 @@
 package com.westear.ssm.init.common;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngineConfiguration;
+
+import com.westear.ssm.util.common.PropertiesUtil;
 
 public class CreateOracleDatabaseInit {
 
@@ -16,21 +19,28 @@ public class CreateOracleDatabaseInit {
 		// ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE(true): 如果没有数据库表就会创建数据库表，有的话就修改表结构. 
 		// ProcessEngineConfiguration.DB_SCHEMA_UPDATE_FALSE(false): 不会创建数据库表
 		// ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP(create-drop): 先创建、再删除.
-		pec.setDatabaseSchemaUpdate("true");
+		pec.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
 		
 		//读取properties文件
+		Map<String,String> jdbcProp = PropertiesUtil.getPropertiesMap("configs/jdbc/", "jdbc.properties");
+		if(!jdbcProp.isEmpty()){
+			//设置数据库的驱动
+			pec.setJdbcDriver(jdbcProp.get("c3p0.driver"));
+////		//设置jdbcURL
+			pec.setJdbcUrl(jdbcProp.get("c3p0.url"));
+////		//设置用户名
+			pec.setJdbcUsername(jdbcProp.get("c3p0.username"));
+			//设置密码
+			pec.setJdbcPassword(jdbcProp.get("c3p0.password"));
+			pec.setDatabaseSchema("ACTIVITI");
+			pec.setJobExecutorActivate(false);
+			pec.setLabelFontName("黑体");
+			pec.setActivityFontName("宋体");
+			//构建流程引擎对象
+			ProcessEngine pe = pec.buildProcessEngine(); //调用方法才会创建数据表
+			//调用close方法时，才会删除
+			pe.close();
+		}
 		
-		//设置数据库的驱动
-//		pec.setJdbcDriver(jdbcProp.get("c3p0.driver"));
-//		//设置jdbcURL
-//		pec.setJdbcUrl(jdbcProp.get("c3p0.url"));
-//		//设置用户名
-//		pec.setJdbcUsername(jdbcProp.get("c3p0.username"));
-//		//设置密码
-//		pec.setJdbcPassword(jdbcProp.get("c3p0.password"));
-		//构建流程引擎对象
-		ProcessEngine pe = pec.buildProcessEngine(); //调用方法才会创建数据表
-		//调用close方法时，才会删除
-		pe.close();
 	}
 }
